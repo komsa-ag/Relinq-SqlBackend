@@ -24,6 +24,7 @@ using Remotion.Linq.Development.UnitTesting.Sandboxing;
 namespace Remotion.Linq.SqlBackend.UnitTests.SqlGeneration.IntegrationTests
 {
   [TestFixture]
+  [Explicit ("TODO RMLNQSQL-77: Re-enable the tests once the optimizations are implemented.")]
   public class MediumTrustSqlBackendIntegrationTest
   {
     [Test]
