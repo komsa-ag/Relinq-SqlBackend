@@ -128,6 +128,7 @@
     <Compile Include="SqlGeneration\SetOperationsMode.cs" />
     <Compile Include="SqlGeneration\SqlGeneratingOuterSelectExpressionVisitor.cs" />
     <Compile Include="SqlGeneration\SqlGeneratingSelectExpressionVisitor.cs" />
+    <Compile Include="SqlPreparation\LeftJoinSubQueryOptimizer.cs" />
     <Compile Include="SqlPreparation\FromExpressionInfo.cs" />
     <Compile Include="SqlPreparation\IMethodCallTransformer.cs" />
     <Compile Include="SqlGeneration\ISqlCommandBuilder.cs" />
