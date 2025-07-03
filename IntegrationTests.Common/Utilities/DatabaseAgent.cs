@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.IO;
 using System.Text;
@@ -70,12 +71,12 @@ namespace Remotion.Linq.IntegrationTests.Common.Utilities
       ArgumentUtility.CheckNotNull ("commandBatch", commandBatch);
 
       var count = 0;
-      using (IDbConnection connection = CreateConnection ())
+      using (DbConnection connection = CreateConnection ())
       {
         connection.Open ();
         if (useTransaction)
         {
-          using (IDbTransaction transaction = connection.BeginTransaction ())
+          using (DbTransaction transaction = connection.BeginTransaction ())
           {
             count = ExecuteBatchString (connection, commandBatch, transaction);
             transaction.Commit ();
@@ -96,14 +97,14 @@ namespace Remotion.Linq.IntegrationTests.Common.Utilities
       return ExecuteBatchFile (sqlFileName, useTransaction);
     }
 
-    protected virtual IDbConnection CreateConnection ()
+    protected virtual DbConnection CreateConnection ()
     {
       return new SqlConnection (_connectionString);
     }
 
-    protected virtual IDbCommand CreateCommand (IDbConnection connection, string commandText, IDbTransaction transaction)
+    protected virtual DbCommand CreateCommand (DbConnection connection, string commandText, DbTransaction transaction)
     {
-      IDbCommand command = connection.CreateCommand ();
+      DbCommand command = connection.CreateCommand ();
       command.CommandType = CommandType.Text;
       command.CommandText = commandText;
       command.Transaction = transaction;
@@ -114,7 +115,7 @@ namespace Remotion.Linq.IntegrationTests.Common.Utilities
     {
       ArgumentUtility.CheckNotNullOrEmpty ("commandText", commandText);
 
-      using (IDbConnection connection = CreateConnection ())
+      using (DbConnection connection = CreateConnection ())
       {
         connection.Open ();
         return ExecuteCommand (connection, commandText, null);
@@ -125,14 +126,14 @@ namespace Remotion.Linq.IntegrationTests.Common.Utilities
     {
       ArgumentUtility.CheckNotNullOrEmpty ("commandText", commandText);
 
-      using (IDbConnection connection = CreateConnection ())
+      using (DbConnection connection = CreateConnection ())
       {
         connection.Open ();
         return ExecuteScalarCommand (connection, commandText, null);
       }
     }
 
-    protected virtual int ExecuteBatchString (IDbConnection connection, string commandBatch, IDbTransaction transaction)
+    protected virtual int ExecuteBatchString (DbConnection connection, string commandBatch, DbTransaction transaction)
     {
       ArgumentUtility.CheckNotNull ("connection", connection);
       ArgumentUtility.CheckNotNullOrEmpty ("commandBatch", commandBatch);
@@ -162,17 +163,17 @@ namespace Remotion.Linq.IntegrationTests.Common.Utilities
       return count;
     }
 
-    protected virtual int ExecuteCommand (IDbConnection connection, string commandText, IDbTransaction transaction)
+    protected virtual int ExecuteCommand (DbConnection connection, string commandText, DbTransaction transaction)
     {
-      using (IDbCommand command = CreateCommand (connection, commandText, transaction))
+      using (DbCommand command = CreateCommand (connection, commandText, transaction))
       {
         return command.ExecuteNonQuery ();
       }
     }
 
-    protected virtual object ExecuteScalarCommand (IDbConnection connection, string commandText, IDbTransaction transaction)
+    protected virtual object ExecuteScalarCommand (DbConnection connection, string commandText, DbTransaction transaction)
     {
-      using (IDbCommand command = CreateCommand (connection, commandText, transaction))
+      using (DbCommand command = CreateCommand (connection, commandText, transaction))
       {
         return command.ExecuteScalar ();
       }
