@@ -18,7 +18,7 @@ using System;
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Remotion.Linq.IntegrationTests.Common.Database;
 using Remotion.Linq.LinqToSqlAdapter;
 
