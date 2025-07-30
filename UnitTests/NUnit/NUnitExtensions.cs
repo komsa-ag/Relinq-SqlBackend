@@ -16,7 +16,6 @@
 //
 
 using System;
-using NUnit.Framework;
 using Remotion.Utilities;
 using NUnit.Framework.Constraints;
 
@@ -24,7 +23,7 @@ namespace Remotion.Linq.SqlBackend.UnitTests.NUnit
 {
   public static class NUnitExtensions
   {
-    public static EqualConstraint ArgumentExceptionMessageEqualTo (this ConstraintExpression constraintExpression, string message, string paramName)
+    public static Constraint ArgumentExceptionMessageEqualTo (this ConstraintExpression constraintExpression, string message, string paramName)
     {
       AssertThatMessageContainsWhitespaces (message: message);
       AssertThatParameterDoesNotContainWhitespaces (paramName: paramName);
