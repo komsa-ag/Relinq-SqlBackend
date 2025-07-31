@@ -43,6 +43,11 @@
     <PackageReference Include="Core.Data.Linq" />
     <PackageReference Include="System.Configuration.ConfigurationManager" VersionOverride="9.0.4" />
   </ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+    <PackageReference Include="Core.Data.Linq" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" VersionOverride="10.0.0-preview.6.25358.103" />
+  </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
     <Reference Include="System.Configuration" />
