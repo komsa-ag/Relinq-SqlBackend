@@ -154,7 +154,7 @@ namespace Remotion.Linq.SqlBackend.SqlPreparation.ResultOperatorHandlers
       ArgumentUtility.CheckNotNull (nameof(stage), stage);
       ArgumentUtility.CheckNotNull (nameof(context), context);
 
-      var castOperator = ArgumentUtility.CheckNotNullAndType<T> ("resultOperator", resultOperator);
+      var castOperator = ArgumentUtility.CheckNotNullAndType<T> (nameof(resultOperator), resultOperator);
       HandleResultOperator (castOperator, sqlStatementBuilder, generator, stage, context);
     }
   }
