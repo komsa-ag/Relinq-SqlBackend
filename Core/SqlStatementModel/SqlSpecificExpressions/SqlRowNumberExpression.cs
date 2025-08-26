@@ -33,7 +33,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.SqlSpecificExpressions
     public SqlRowNumberExpression (Ordering[] orderings)
     {
       ArgumentUtility.CheckNotNull (nameof(orderings), orderings);
-      ArgumentUtility.CheckNotEmpty ("orderings", orderings);
+      ArgumentUtility.CheckNotEmpty (nameof(orderings), orderings);
       
       _orderings = Array.AsReadOnly (orderings);
     }
