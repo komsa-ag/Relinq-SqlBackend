@@ -38,7 +38,7 @@ namespace Remotion.Linq.SqlBackend.SqlGeneration
         ParameterExpression inMemoryProjectionParameter, 
         Expression inMemoryProjectionBody)
     {
-      ArgumentUtility.CheckNotNullOrEmpty ("commandText", commandText);
+      ArgumentUtility.CheckNotNullOrEmpty (nameof(commandText), commandText);
       ArgumentUtility.CheckNotNull (nameof(parameters), parameters);
       ArgumentUtility.CheckNotNull (nameof(inMemoryProjectionParameter), inMemoryProjectionParameter);
       ArgumentUtility.CheckNotNull (nameof(inMemoryProjectionBody), inMemoryProjectionBody);

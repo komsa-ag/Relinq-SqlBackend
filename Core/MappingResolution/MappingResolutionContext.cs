@@ -80,7 +80,7 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
     {
       ArgumentUtility.CheckNotNull (nameof(entityExpression), entityExpression);
       ArgumentUtility.CheckNotNull (nameof(itemType), itemType);
-      ArgumentUtility.CheckNotNullOrEmpty ("tableAlias", tableAlias);
+      ArgumentUtility.CheckNotNullOrEmpty (nameof(tableAlias), tableAlias);
 
       var newEntityExpression = entityExpression.Update (itemType, tableAlias, newName);
       var tableForEntityExpression = GetSqlTableForEntityExpression (entityExpression);

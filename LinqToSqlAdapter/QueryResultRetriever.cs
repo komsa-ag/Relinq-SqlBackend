@@ -43,7 +43,7 @@ namespace Remotion.Linq.LinqToSqlAdapter
     public IEnumerable<T> GetResults<T> (Func<IDatabaseResultRow, T> projection, string commandText, CommandParameter[] parameters)
     {
       ArgumentUtility.CheckNotNull (nameof(projection), projection);
-      ArgumentUtility.CheckNotNullOrEmpty ("commandText", commandText);
+      ArgumentUtility.CheckNotNullOrEmpty (nameof(commandText), commandText);
       ArgumentUtility.CheckNotNull (nameof(parameters), parameters);
 
       using (var connection = _connectionManager.Open())

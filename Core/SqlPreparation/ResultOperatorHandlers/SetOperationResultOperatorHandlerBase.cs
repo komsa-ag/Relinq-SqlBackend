@@ -19,7 +19,7 @@ namespace Remotion.Linq.SqlBackend.SqlPreparation.ResultOperatorHandlers
 
     protected SetOperationResultOperatorHandlerBase (SetOperation setOperation, string operationName)
     {
-      ArgumentUtility.CheckNotNullOrEmpty ("operationName", operationName);
+      ArgumentUtility.CheckNotNullOrEmpty (nameof(operationName), operationName);
 
       _setOperation = setOperation;
       _operationName = operationName;

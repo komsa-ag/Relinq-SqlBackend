@@ -34,7 +34,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.Resolved
     {
       ArgumentUtility.CheckNotNull (nameof(type), type);
       ArgumentUtility.CheckNotNull (nameof(owningTableAlias), owningTableAlias);
-      ArgumentUtility.CheckNotNullOrEmpty ("columnName", columnName);
+      ArgumentUtility.CheckNotNullOrEmpty (nameof(columnName), columnName);
       ArgumentUtility.CheckNotNull (nameof(isPrimaryKey), isPrimaryKey);
 
       _type = type;

@@ -33,8 +33,8 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.Resolved
     public ResolvedSimpleTableInfo (Type itemType, string tableName, string tableAlias)
     {
       ArgumentUtility.CheckNotNull (nameof(itemType), itemType);
-      ArgumentUtility.CheckNotNullOrEmpty ("tableName", tableName);
-      ArgumentUtility.CheckNotNullOrEmpty ("tableAlias", tableAlias);
+      ArgumentUtility.CheckNotNullOrEmpty (nameof(tableName), tableName);
+      ArgumentUtility.CheckNotNullOrEmpty (nameof(tableAlias), tableAlias);
 
       _itemType = itemType;
       _tableName = tableName;

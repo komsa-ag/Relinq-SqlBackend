@@ -33,7 +33,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.Resolved
 
     public ResolvedSubStatementTableInfo (string tableAlias, SqlStatement sqlStatement)
     {
-      ArgumentUtility.CheckNotNullOrEmpty ("tableAlias", tableAlias);
+      ArgumentUtility.CheckNotNullOrEmpty (nameof(tableAlias), tableAlias);
       ArgumentUtility.CheckNotNull (nameof(sqlStatement), sqlStatement);
       
       _sqlStatement = sqlStatement;

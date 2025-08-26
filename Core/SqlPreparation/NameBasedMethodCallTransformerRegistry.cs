@@ -38,7 +38,7 @@ namespace Remotion.Linq.SqlBackend.SqlPreparation
     
     public override IMethodCallTransformer GetItem (string key)
     {
-      ArgumentUtility.CheckNotNullOrEmpty ("key", key);
+      ArgumentUtility.CheckNotNullOrEmpty (nameof(key), key);
 
       return GetItemExact (key);
     }

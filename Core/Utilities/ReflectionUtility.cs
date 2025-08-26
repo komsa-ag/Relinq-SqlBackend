@@ -46,7 +46,7 @@ namespace Remotion.Linq.SqlBackend.Utilities
     public static Type GetItemTypeOfClosedGenericIEnumerable (Type enumerableType, string argumentName)
     {
       ArgumentUtility.CheckNotNull (nameof(enumerableType), enumerableType);
-      ArgumentUtility.CheckNotNullOrEmpty ("argumentName", argumentName);
+      ArgumentUtility.CheckNotNullOrEmpty (nameof(argumentName), argumentName);
 
       Type itemType;
       if (!ItemTypeReflectionUtility.TryGetItemTypeOfClosedGenericIEnumerable (enumerableType, out itemType))

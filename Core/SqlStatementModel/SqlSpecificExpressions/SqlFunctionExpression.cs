@@ -34,7 +34,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.SqlSpecificExpressions
     public SqlFunctionExpression (Type type, string sqlFunctioName, params Expression[] args)
     {
       ArgumentUtility.CheckNotNull (nameof(type), type);
-      ArgumentUtility.CheckNotNullOrEmpty ("sqlFunctioName", sqlFunctioName);
+      ArgumentUtility.CheckNotNullOrEmpty (nameof(sqlFunctioName), sqlFunctioName);
       ArgumentUtility.CheckNotNull (nameof(args), args);
 
       _type = type;

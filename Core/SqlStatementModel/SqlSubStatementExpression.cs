@@ -80,8 +80,8 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel
     
     public SqlTable ConvertToSqlTable (string uniqueIdentifier)
     {
-      ArgumentUtility.CheckNotNullOrEmpty ("uniqueIdentifier", uniqueIdentifier);
-      ArgumentUtility.CheckNotNullOrEmpty ("uniqueIdentifier", uniqueIdentifier);
+      ArgumentUtility.CheckNotNullOrEmpty (nameof(uniqueIdentifier), uniqueIdentifier);
+      ArgumentUtility.CheckNotNullOrEmpty (nameof(uniqueIdentifier), uniqueIdentifier);
       
       var joinSemantic = CalculateJoinSemantic();
 
