@@ -41,7 +41,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.SqlSpecificExpressions
         ArgumentUtility.CheckNotNull (nameof(then), then);
 
         if (!BooleanUtility.IsBooleanType (when.Type))
-          throw new ArgumentException ("The WHEN expression's type must be boolean.", "when");
+          throw new ArgumentException ("The WHEN expression's type must be boolean.", nameof(when));
 
         _when = when;
         _then = then;
@@ -109,14 +109,14 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.SqlSpecificExpressions
       ArgumentUtility.CheckNotNull (nameof(cases), cases);
 
       if (elseCase == null && type.IsValueType && Nullable.GetUnderlyingType (type) == null)
-        throw new ArgumentException ("When no ELSE case is given, the expression's result type must be nullable.", "type");
+        throw new ArgumentException ("When no ELSE case is given, the expression's result type must be nullable.", nameof(type));
 
       var casesArray = cases.ToArray();
       if (casesArray.Any (c => !type.IsAssignableFrom (c.Then.Type)))
-        throw new ArgumentException ("The THEN expressions' types must match the expression type.", "cases");
+        throw new ArgumentException ("The THEN expressions' types must match the expression type.", nameof(cases));
 
       if (elseCase != null && !type.IsAssignableFrom (elseCase.Type))
-        throw new ArgumentException ("The ELSE expression's type must match the expression type.", "elseCase");
+        throw new ArgumentException ("The ELSE expression's type must match the expression type.", nameof(elseCase));
 
       _type = type;
       _cases = Array.AsReadOnly (casesArray);

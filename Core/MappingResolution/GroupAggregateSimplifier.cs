@@ -98,7 +98,7 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
         {
           throw new ArgumentException (
               "The unresolved projection doesn't match the resolved statement: it has no aggregation.",
-              "unresolvedSelectProjection");
+              nameof(unresolvedSelectProjection));
         }
         var newAggregation = visitor.Visit (aggregationExpression);
 

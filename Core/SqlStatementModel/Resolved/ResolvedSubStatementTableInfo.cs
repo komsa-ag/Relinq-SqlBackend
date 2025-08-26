@@ -41,7 +41,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.Resolved
       
       var streamedSequenceInfo = sqlStatement.DataInfo as StreamedSequenceInfo;
       if (streamedSequenceInfo == null)
-        throw new ArgumentException ("For a statement to be used as a table, it must return a sequence of items.", "sqlStatement");
+        throw new ArgumentException ("For a statement to be used as a table, it must return a sequence of items.", nameof(sqlStatement));
       _itemType = streamedSequenceInfo.ResultItemType;
     }
 

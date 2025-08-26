@@ -40,7 +40,7 @@ namespace Remotion.Linq.SqlBackend
       else if (type == typeof (bool?))
         return typeof (int?);
       else
-        throw new ArgumentException ("Type must be Boolean or Nullable<Boolean>.", "type");
+        throw new ArgumentException ("Type must be Boolean or Nullable<Boolean>.", nameof(type));
     }
 
     public static Type GetMatchingBoolType (Type type)
@@ -51,7 +51,7 @@ namespace Remotion.Linq.SqlBackend
       else if (type == typeof (int?))
         return typeof (bool?);
       else
-        throw new ArgumentException ("Type must be Int32 or Nullable<Int32>.", "type");
+        throw new ArgumentException ("Type must be Int32 or Nullable<Int32>.", nameof(type));
     }
 
     public static bool? ConvertNullableIntToNullableBool (int? nullableValue)
@@ -66,7 +66,7 @@ namespace Remotion.Linq.SqlBackend
       else if (intType == typeof (int?))
         return typeof (BooleanUtility).GetMethod ("ConvertNullableIntToNullableBool", new[] { typeof (int?) });
       else
-        throw new ArgumentException ("Type must be Int32 or Nullable<Int32>.", "intType");
+        throw new ArgumentException ("Type must be Int32 or Nullable<Int32>.", nameof(intType));
     }
   }
 }

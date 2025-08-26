@@ -54,7 +54,7 @@ namespace Remotion.Linq.SqlBackend.SqlPreparation.MethodCallTransformers
           "AddYears" => AddUnits (methodCallExpression, "year"),
           _ => throw new ArgumentException (
               $"The method '{methodCallExpression.Method.DeclaringType}.{methodCallExpression.Method.Name}' is not a supported method.",
-              "methodCallExpression")
+              nameof(methodCallExpression))
         };
     }
 

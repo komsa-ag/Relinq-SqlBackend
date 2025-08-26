@@ -35,7 +35,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.Resolved
       ArgumentUtility.CheckNotNull (nameof(joinCondition), joinCondition);
 
       if (!BooleanUtility.IsBooleanType (joinCondition.Type))
-        throw new ArgumentException ("The join condition must have boolean (or nullable boolean) type.", "joinCondition");
+        throw new ArgumentException ("The join condition must have boolean (or nullable boolean) type.", nameof(joinCondition));
       
       _foreignTableInfo = foreignTableInfo;
       _joinCondition = joinCondition;

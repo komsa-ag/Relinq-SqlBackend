@@ -94,7 +94,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.Resolved
       }
       catch (ArgumentException ex)
       {
-        throw new ArgumentException ("The inner expression must be an expression of type Int32 or Nullable<Int32>.", "expression", ex);
+        throw new ArgumentException ("The inner expression must be an expression of type Int32 or Nullable<Int32>.", nameof(expression), ex);
       }
     }
   }

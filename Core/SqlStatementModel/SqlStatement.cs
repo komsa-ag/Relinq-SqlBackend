@@ -63,7 +63,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel
       ArgumentUtility.CheckNotNull (nameof(setOperationCombinedStatements), setOperationCombinedStatements);
       
       if (whereCondition != null && whereCondition.Type != typeof (bool))
-        throw ArgumentUtility.CreateArgumentTypeException ("whereCondition", whereCondition.Type, typeof (bool));
+        throw ArgumentUtility.CreateArgumentTypeException (nameof(whereCondition), whereCondition.Type, typeof (bool));
 
       _dataInfo = dataInfo;
       _selectProjection = selectProjection;

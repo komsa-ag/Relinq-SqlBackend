@@ -40,7 +40,7 @@ namespace Remotion.Linq.SqlBackend.Utilities
       if (methodInfo != null)
         return methodInfo.ReturnType;
 
-      throw new ArgumentException ("Argument must be FieldInfo, PropertyInfo, or MethodInfo.", "member");
+      throw new ArgumentException ("Argument must be FieldInfo, PropertyInfo, or MethodInfo.", nameof(member));
     }
 
     public static Type GetItemTypeOfClosedGenericIEnumerable (Type enumerableType, string argumentName)

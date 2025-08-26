@@ -59,7 +59,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel
         if (_joinInfo != null)
         {
           if (_joinInfo.ItemType != value.ItemType)
-            throw ArgumentUtility.CreateArgumentTypeException ("value", value.ItemType, _joinInfo.ItemType);
+            throw ArgumentUtility.CreateArgumentTypeException (nameof(value), value.ItemType, _joinInfo.ItemType);
         }
         _joinInfo = value;
       }

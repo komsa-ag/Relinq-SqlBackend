@@ -51,7 +51,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel
         if (_tableInfo != null)
         {
           if (_tableInfo.ItemType != value.ItemType)
-            throw ArgumentUtility.CreateArgumentTypeException ("value", value.ItemType, _tableInfo.ItemType);
+            throw ArgumentUtility.CreateArgumentTypeException (nameof(value), value.ItemType, _tableInfo.ItemType);
         }
         _tableInfo = value;
       }

@@ -98,7 +98,7 @@ namespace Remotion.Linq.SqlBackend.SqlPreparation.MethodCallTransformers
         default:
           var argumentExceptionMessage = string.Format (
               "The method '{0}.{1}' is not a supported method.", methodCallExpression.Method.DeclaringType, methodCallExpression.Method.Name);
-          throw new ArgumentException (argumentExceptionMessage, "methodCallExpression");
+          throw new ArgumentException (argumentExceptionMessage, nameof(methodCallExpression));
       }
     }
 

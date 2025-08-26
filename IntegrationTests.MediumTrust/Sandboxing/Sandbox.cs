@@ -68,7 +68,7 @@ namespace Remotion.Linq.SqlBackend.IntegrationTests.MediumTrust.Sandboxing
         catch (InvalidOperationException ex)
         {
           // This clock does not have a unit test because it's impossible/difficult to reference an unsigned assembly from a signed unit test project.
-          throw new ArgumentException (ex.Message, "fullTrustAssemblies", ex);
+          throw new ArgumentException (ex.Message, nameof(fullTrustAssemblies), ex);
         }
       }
 
