@@ -34,7 +34,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.Resolved
     public ResolvedSubStatementTableInfo (string tableAlias, SqlStatement sqlStatement)
     {
       ArgumentUtility.CheckNotNullOrEmpty ("tableAlias", tableAlias);
-      ArgumentUtility.CheckNotNull ("sqlStatement", sqlStatement);
+      ArgumentUtility.CheckNotNull (nameof(sqlStatement), sqlStatement);
       
       _sqlStatement = sqlStatement;
       _tableAlias = tableAlias;
@@ -73,7 +73,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.Resolved
 
     public virtual ITableInfo Accept (ITableInfoVisitor visitor)
     {
-      ArgumentUtility.CheckNotNull ("visitor", visitor);
+      ArgumentUtility.CheckNotNull (nameof(visitor), visitor);
       return visitor.VisitSubStatementTableInfo(this);
     }
 

@@ -28,13 +28,13 @@ namespace Remotion.Linq.SqlBackend
   {
     public static bool IsBooleanType (Type type)
     {
-      ArgumentUtility.CheckNotNull ("type", type);
+      ArgumentUtility.CheckNotNull (nameof(type), type);
       return type == typeof (bool) || type == typeof (bool?);
     }
 
     public static Type GetMatchingIntType (Type type)
     {
-      ArgumentUtility.CheckNotNull ("type", type);
+      ArgumentUtility.CheckNotNull (nameof(type), type);
       if (type == typeof (bool))
         return typeof (int);
       else if (type == typeof (bool?))
@@ -45,7 +45,7 @@ namespace Remotion.Linq.SqlBackend
 
     public static Type GetMatchingBoolType (Type type)
     {
-      ArgumentUtility.CheckNotNull ("type", type);
+      ArgumentUtility.CheckNotNull (nameof(type), type);
       if (type == typeof (int))
         return typeof (bool);
       else if (type == typeof (int?))

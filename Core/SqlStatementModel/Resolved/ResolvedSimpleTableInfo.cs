@@ -32,7 +32,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.Resolved
 
     public ResolvedSimpleTableInfo (Type itemType, string tableName, string tableAlias)
     {
-      ArgumentUtility.CheckNotNull ("itemType", itemType);
+      ArgumentUtility.CheckNotNull (nameof(itemType), itemType);
       ArgumentUtility.CheckNotNullOrEmpty ("tableName", tableName);
       ArgumentUtility.CheckNotNullOrEmpty ("tableAlias", tableAlias);
 
@@ -53,10 +53,10 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.Resolved
 
     public Expression ResolveReference (SqlTableBase sqlTable, IMappingResolver mappingResolver, IMappingResolutionContext context, UniqueIdentifierGenerator generator)
     {
-      ArgumentUtility.CheckNotNull ("sqlTable", sqlTable);
-      ArgumentUtility.CheckNotNull ("mappingResolver", mappingResolver);
-      ArgumentUtility.CheckNotNull ("context", context);
-      ArgumentUtility.CheckNotNull ("generator", generator);
+      ArgumentUtility.CheckNotNull (nameof(sqlTable), sqlTable);
+      ArgumentUtility.CheckNotNull (nameof(mappingResolver), mappingResolver);
+      ArgumentUtility.CheckNotNull (nameof(context), context);
+      ArgumentUtility.CheckNotNull (nameof(generator), generator);
 
       var entity = (SqlEntityExpression) mappingResolver.ResolveSimpleTableInfo (this, generator);
       context.AddSqlEntityMapping (entity, sqlTable);
@@ -70,7 +70,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.Resolved
 
     public virtual ITableInfo Accept (ITableInfoVisitor visitor)
     {
-      ArgumentUtility.CheckNotNull ("visitor", visitor);
+      ArgumentUtility.CheckNotNull (nameof(visitor), visitor);
       return visitor.VisitSimpleTableInfo (this);
     }
 

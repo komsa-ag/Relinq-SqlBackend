@@ -34,8 +34,8 @@ namespace Remotion.Linq.SqlBackend.IntegrationTests.MediumTrust.Sandboxing
   {
     public static TestFixtureResult[] RunTestFixturesInSandbox (IEnumerable<Type> testFixtureTypes, IPermission[] permissions, Assembly[] fullTrustAssemblies)
     {
-      ArgumentUtility.CheckNotNull ("testFixtureTypes", testFixtureTypes);
-      ArgumentUtility.CheckNotNull ("permissions", permissions);
+      ArgumentUtility.CheckNotNull (nameof(testFixtureTypes), testFixtureTypes);
+      ArgumentUtility.CheckNotNull (nameof(permissions), permissions);
 
       using (var sandbox = Sandbox.CreateSandbox (permissions, fullTrustAssemblies))
       {

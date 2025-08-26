@@ -32,7 +32,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.Resolved
 
     public SqlConvertedBooleanExpression (Expression expression)
     {
-      ArgumentUtility.CheckNotNull ("expression", expression);
+      ArgumentUtility.CheckNotNull (nameof(expression), expression);
 
       _type = GetMatchingBoolType (expression);
       _expression = expression;

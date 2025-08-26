@@ -26,7 +26,7 @@ namespace Remotion.Utilities
   {
     public static MethodInfo GetMethod<TReturnType> (Expression<Func<TReturnType>> expression)
     {
-      ArgumentUtility.CheckNotNull ("expression", expression);
+      ArgumentUtility.CheckNotNull (nameof(expression), expression);
       return GetMethodInfoFromMethodCallExpression (expression.Body);
     }
 

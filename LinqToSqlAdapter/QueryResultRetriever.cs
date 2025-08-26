@@ -33,8 +33,8 @@ namespace Remotion.Linq.LinqToSqlAdapter
 
     public QueryResultRetriever (IConnectionManager connectionManager, IReverseMappingResolver resolver)
     {
-      ArgumentUtility.CheckNotNull ("connectionManager", connectionManager);
-      ArgumentUtility.CheckNotNull ("resolver", resolver);
+      ArgumentUtility.CheckNotNull (nameof(connectionManager), connectionManager);
+      ArgumentUtility.CheckNotNull (nameof(resolver), resolver);
 
       _connectionManager = connectionManager;
       _resolver = resolver;
@@ -42,9 +42,9 @@ namespace Remotion.Linq.LinqToSqlAdapter
 
     public IEnumerable<T> GetResults<T> (Func<IDatabaseResultRow, T> projection, string commandText, CommandParameter[] parameters)
     {
-      ArgumentUtility.CheckNotNull ("projection", projection);
+      ArgumentUtility.CheckNotNull (nameof(projection), projection);
       ArgumentUtility.CheckNotNullOrEmpty ("commandText", commandText);
-      ArgumentUtility.CheckNotNull ("parameters", parameters);
+      ArgumentUtility.CheckNotNull (nameof(parameters), parameters);
 
       using (var connection = _connectionManager.Open())
       {

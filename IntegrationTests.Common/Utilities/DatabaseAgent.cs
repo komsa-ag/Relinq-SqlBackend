@@ -68,7 +68,7 @@ namespace Remotion.Linq.IntegrationTests.Common.Utilities
 
     public int ExecuteBatchString (string commandBatch, bool useTransaction)
     {
-      ArgumentUtility.CheckNotNull ("commandBatch", commandBatch);
+      ArgumentUtility.CheckNotNull (nameof(commandBatch), commandBatch);
 
       var count = 0;
       using (DbConnection connection = CreateConnection ())
@@ -92,7 +92,7 @@ namespace Remotion.Linq.IntegrationTests.Common.Utilities
     [Obsolete ("Use 'ExecuteBatchFile' instead.")]
     public int ExecuteBatch (string sqlFileName, bool useTransaction)
     {
-      ArgumentUtility.CheckNotNull ("sqlFileName", sqlFileName);
+      ArgumentUtility.CheckNotNull (nameof(sqlFileName), sqlFileName);
 
       return ExecuteBatchFile (sqlFileName, useTransaction);
     }
@@ -135,7 +135,7 @@ namespace Remotion.Linq.IntegrationTests.Common.Utilities
 
     protected virtual int ExecuteBatchString (DbConnection connection, string commandBatch, DbTransaction transaction)
     {
-      ArgumentUtility.CheckNotNull ("connection", connection);
+      ArgumentUtility.CheckNotNull (nameof(connection), connection);
       ArgumentUtility.CheckNotNullOrEmpty ("commandBatch", commandBatch);
 
       var count = 0;

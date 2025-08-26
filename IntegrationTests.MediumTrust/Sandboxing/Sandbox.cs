@@ -46,7 +46,7 @@ namespace Remotion.Linq.SqlBackend.IntegrationTests.MediumTrust.Sandboxing
   {
     public static Sandbox CreateSandbox (IPermission[] permissions, Assembly[] fullTrustAssemblies)
     {
-      ArgumentUtility.CheckNotNull ("permissions", permissions);
+      ArgumentUtility.CheckNotNull (nameof(permissions), permissions);
 
       var appDomainSetup = AppDomain.CurrentDomain.SetupInformation;
 

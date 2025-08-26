@@ -31,7 +31,7 @@ namespace Remotion.Linq.SqlBackend.SqlPreparation
   {
     public IMethodCallTransformer GetTransformer (MethodCallExpression methodCallExpression)
     {
-      ArgumentUtility.CheckNotNull ("methodCallExpression", methodCallExpression);
+      ArgumentUtility.CheckNotNull (nameof(methodCallExpression), methodCallExpression);
 
       return GetItem (methodCallExpression.Method.Name);
     }

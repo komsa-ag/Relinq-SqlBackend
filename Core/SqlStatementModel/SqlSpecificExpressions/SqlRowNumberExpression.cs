@@ -32,7 +32,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.SqlSpecificExpressions
 
     public SqlRowNumberExpression (Ordering[] orderings)
     {
-      ArgumentUtility.CheckNotNull ("orderings", orderings);
+      ArgumentUtility.CheckNotNull (nameof(orderings), orderings);
       ArgumentUtility.CheckNotEmpty ("orderings", orderings);
       
       _orderings = Array.AsReadOnly (orderings);
@@ -55,7 +55,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.SqlSpecificExpressions
 
     protected override Expression VisitChildren (ExpressionVisitor visitor)
     {
-      ArgumentUtility.CheckNotNull ("visitor", visitor);
+      ArgumentUtility.CheckNotNull (nameof(visitor), visitor);
 
       var newOrderings = Orderings.Select (
           o =>
@@ -72,7 +72,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.SqlSpecificExpressions
 
     protected override Expression Accept (ExpressionVisitor visitor)
     {
-      ArgumentUtility.CheckNotNull ("visitor", visitor);
+      ArgumentUtility.CheckNotNull (nameof(visitor), visitor);
 
       var specificVisitor = visitor as ISqlSpecificExpressionVisitor;
       if (specificVisitor != null)
