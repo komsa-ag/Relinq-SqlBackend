@@ -35,26 +35,26 @@ namespace Remotion.Linq.IntegrationTests.Common.Utilities
 
     public DatabaseAgent (string connectionString)
     {
-      ArgumentUtility.CheckNotNullOrEmpty ("connectionString", connectionString);
+      ArgumentUtility.CheckNotNullOrEmpty (nameof(connectionString), connectionString);
 
       _connectionString = connectionString;
     }
 
     public void SetDatabaseReadWrite (string database)
     {
-      ArgumentUtility.CheckNotNullOrEmpty ("database", database);
+      ArgumentUtility.CheckNotNullOrEmpty (nameof(database), database);
       ExecuteCommand (string.Format ("ALTER DATABASE [{0}] SET READ_WRITE WITH ROLLBACK IMMEDIATE", database));
     }
 
     public void SetDatabaseReadOnly (string database)
     {
-      ArgumentUtility.CheckNotNullOrEmpty ("database", database);
+      ArgumentUtility.CheckNotNullOrEmpty (nameof(database), database);
       ExecuteCommand (string.Format ("ALTER DATABASE [{0}] SET READ_ONLY WITH ROLLBACK IMMEDIATE", database));
     }
 
     public int ExecuteBatchFile (string sqlFileName, bool useTransaction)
     {
-      ArgumentUtility.CheckNotNullOrEmpty ("sqlFileName", sqlFileName);
+      ArgumentUtility.CheckNotNullOrEmpty (nameof(sqlFileName), sqlFileName);
 
       _fileName = sqlFileName;
       if (!Path.IsPathRooted (sqlFileName))
@@ -68,7 +68,7 @@ namespace Remotion.Linq.IntegrationTests.Common.Utilities
 
     public int ExecuteBatchString (string commandBatch, bool useTransaction)
     {
-      ArgumentUtility.CheckNotNull ("commandBatch", commandBatch);
+      ArgumentUtility.CheckNotNull (nameof(commandBatch), commandBatch);
 
       var count = 0;
       using (DbConnection connection = CreateConnection ())
@@ -92,7 +92,7 @@ namespace Remotion.Linq.IntegrationTests.Common.Utilities
     [Obsolete ("Use 'ExecuteBatchFile' instead.")]
     public int ExecuteBatch (string sqlFileName, bool useTransaction)
     {
-      ArgumentUtility.CheckNotNull ("sqlFileName", sqlFileName);
+      ArgumentUtility.CheckNotNull (nameof(sqlFileName), sqlFileName);
 
       return ExecuteBatchFile (sqlFileName, useTransaction);
     }
@@ -113,7 +113,7 @@ namespace Remotion.Linq.IntegrationTests.Common.Utilities
 
     public int ExecuteCommand (string commandText)
     {
-      ArgumentUtility.CheckNotNullOrEmpty ("commandText", commandText);
+      ArgumentUtility.CheckNotNullOrEmpty (nameof(commandText), commandText);
 
       using (DbConnection connection = CreateConnection ())
       {
@@ -124,7 +124,7 @@ namespace Remotion.Linq.IntegrationTests.Common.Utilities
 
     public object ExecuteScalarCommand (string commandText)
     {
-      ArgumentUtility.CheckNotNullOrEmpty ("commandText", commandText);
+      ArgumentUtility.CheckNotNullOrEmpty (nameof(commandText), commandText);
 
       using (DbConnection connection = CreateConnection ())
       {
@@ -135,8 +135,8 @@ namespace Remotion.Linq.IntegrationTests.Common.Utilities
 
     protected virtual int ExecuteBatchString (DbConnection connection, string commandBatch, DbTransaction transaction)
     {
-      ArgumentUtility.CheckNotNull ("connection", connection);
-      ArgumentUtility.CheckNotNullOrEmpty ("commandBatch", commandBatch);
+      ArgumentUtility.CheckNotNull (nameof(connection), connection);
+      ArgumentUtility.CheckNotNullOrEmpty (nameof(commandBatch), commandBatch);
 
       var count = 0;
       foreach (var command in GetCommandTextBatches (commandBatch))
