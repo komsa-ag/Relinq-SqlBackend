@@ -12,6 +12,7 @@
     <Description>re-linq SQL Backend: A framework for generating SQL based on the re-linq Frontend.</Description>
     <AssemblyName>Remotion.Linq.SqlBackend</AssemblyName>
     <RootNamespace>$(AssemblyName)</RootNamespace>
+    <PackageId>Komsa.$(AssemblyName)</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
