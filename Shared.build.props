@@ -44,8 +44,9 @@
     <None Include="**\*.licenseheader" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(ProjectType)' == 'Library'" >
-  </ItemGroup>
+  <PropertyGroup Condition="'$(ProjectType)' == 'Library'" >
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
 
   <ItemGroup Condition="'$(ProjectType)' == 'Test'">
     <PackageReference Include="Moq" PrivateAssets="all" />
@@ -59,8 +60,8 @@
     <_version>$(Version.Split('-')[0])</_version>
     <AssemblyVersion>$(_version).0</AssemblyVersion>
     <FileVersion>$(_version).24009</FileVersion>
-    <InformationalVersion>$(_version)-x.9+$(Configuration)</InformationalVersion>
-    <PackageVersion>$(_version)-x.9</PackageVersion>
+    <InformationalVersion>$(_version).9+$(Configuration)</InformationalVersion>
+    <PackageVersion>$(_version).9</PackageVersion>
   </PropertyGroup>
 
   <Target Name="CopyTestHostAppConfigs"
