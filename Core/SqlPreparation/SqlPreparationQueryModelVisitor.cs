@@ -250,14 +250,31 @@ namespace Remotion.Linq.SqlBackend.SqlPreparation
         if (fromExpressionAsConstant.Value is string or char[] or byte[])
           return null;
 
-        if (fromExpressionAsConstant.Value is IEnumerable enumerable and not IQueryable)
-          return enumerable;
-        
+        if (TryGetConstantCollection(fromExpressionAsConstant, out var collection))
+          return collection;
+
         if (fromExpressionAsConstant.Value == null)
           throw new NotSupportedException ("Data sources cannot be null.");
       }
 
       return null;
+    }
+
+    /// <summary>
+    /// tries to convert the value of the expression into a collection
+    /// </summary>
+    /// <param name="expression">expression</param>
+    /// <param name="collection">collection</param>
+    /// <returns>whether the conversion succeeded</returns>
+    protected virtual bool TryGetConstantCollection(ConstantExpression expression, out IEnumerable collection)
+    {
+      if (expression.Value is IEnumerable enumerable and not IQueryable)
+      {
+        collection = enumerable;
+        return true;
+      }
+      collection = null;
+      return false;
     }
   }
 }

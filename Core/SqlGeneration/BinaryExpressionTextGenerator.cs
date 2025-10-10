@@ -104,15 +104,18 @@ namespace Remotion.Linq.SqlBackend.SqlGeneration
         _expressionVisitor.Visit (exclusiveOrSimulationExpression);
       }
       else
-      {
-        string operatorString = GetRegisteredOperatorString (nodeType);
+        GenerateSqlForInfixOperatorCore(left, right, nodeType);
+    }
 
-        _expressionVisitor.Visit (left);
-        _commandBuilder.Append (" ");
-        _commandBuilder.Append (operatorString);
-        _commandBuilder.Append (" ");
-        _expressionVisitor.Visit (right);
-      }
+    protected virtual void GenerateSqlForInfixOperatorCore(Expression left, Expression right, ExpressionType nodeType)
+    {
+      string operatorString = GetRegisteredOperatorString(nodeType);
+
+      _expressionVisitor.Visit(left);
+      _commandBuilder.Append(" ");
+      _commandBuilder.Append(operatorString);
+      _commandBuilder.Append(" ");
+      _expressionVisitor.Visit(right);
     }
 
     private string GetRegisteredOperatorString (ExpressionType nodeType)
