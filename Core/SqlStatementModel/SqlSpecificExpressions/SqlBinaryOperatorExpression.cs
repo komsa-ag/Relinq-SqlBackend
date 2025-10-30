@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with re-linq; if not, see http://www.gnu.org/licenses.
 // 
-
 using System;
 using System.Linq.Expressions;
 using Remotion.Utilities;
@@ -22,18 +21,23 @@ using Remotion.Utilities;
 namespace Remotion.Linq.SqlBackend.SqlStatementModel.SqlSpecificExpressions
 {
   /// <summary>
-  /// Represents a SQL "a IN b" expression.
+  /// Represents a SQL "a OPERATOR b" expression.
   /// </summary>
-  public class SqlInExpression : Expression
+  public class SqlBinaryOperatorExpression : Expression
   {
+    private readonly Type _type;
+    private readonly string _binaryOperator;
     private readonly Expression _leftExpression;
     private readonly Expression _rightExpression;
 
-    public SqlInExpression (Expression leftExpression, Expression rightExpression)
+    public SqlBinaryOperatorExpression(Type type, string binaryOperator, Expression leftExpression, Expression rightExpression)
     {
-      ArgumentUtility.CheckNotNull (nameof(leftExpression), leftExpression);
-      ArgumentUtility.CheckNotNull (nameof(rightExpression), rightExpression);
-
+      ArgumentUtility.CheckNotNull(nameof(type), type);
+      ArgumentUtility.CheckNotNull(nameof(binaryOperator), binaryOperator);
+      ArgumentUtility.CheckNotNull(nameof(leftExpression), leftExpression);
+      ArgumentUtility.CheckNotNull(nameof(rightExpression), rightExpression);
+      _type = type;
+      _binaryOperator = binaryOperator;
       _leftExpression = leftExpression;
       _rightExpression = rightExpression;
     }
@@ -45,7 +49,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.SqlSpecificExpressions
 
     public override Type Type
     {
-      get { return typeof(bool); }
+      get { return _type; }
     }
 
     public Expression LeftExpression
@@ -58,29 +62,34 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.SqlSpecificExpressions
       get { return _rightExpression; }
     }
 
-    protected override Expression VisitChildren (ExpressionVisitor visitor)
+    public string BinaryOperator
     {
-      var newLeftExpression = visitor.Visit (_leftExpression);
-      var newRightExpression = visitor.Visit (_rightExpression);
+      get { return _binaryOperator; }
+    }
 
-      if(newLeftExpression!=_leftExpression || newRightExpression!=_rightExpression)
-        return new SqlInExpression (newLeftExpression, newRightExpression);
+    protected override Expression VisitChildren(ExpressionVisitor visitor)
+    {
+      var newLeftExpression = visitor.Visit(_leftExpression);
+      var newRightExpression = visitor.Visit(_rightExpression);
+
+      if (newLeftExpression != _leftExpression || newRightExpression != _rightExpression)
+        return new SqlBinaryOperatorExpression(typeof(bool), _binaryOperator, newLeftExpression, newRightExpression);
       else
         return this;
     }
 
-    protected override Expression Accept (ExpressionVisitor visitor)
+    protected override Expression Accept(ExpressionVisitor visitor)
     {
-      var specificVisitor = visitor as ISqlInExpressionVisitor;
+      var specificVisitor = visitor as ISqlBinaryOperatorExpressionVisitor;
       if (specificVisitor != null)
-        return specificVisitor.VisitSqlIn (this);
+        return specificVisitor.VisitSqlBinaryOperator(this);
       else
-        return base.Accept (visitor);
+        return base.Accept(visitor);
     }
 
-    public override string ToString ()
+    public override string ToString()
     {
-      return string.Format ("{0} IN {1}", _leftExpression, _rightExpression);
+      return string.Format("{0} {1} {2}", _leftExpression, _binaryOperator, _rightExpression);
     }
   }
 }

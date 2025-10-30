@@ -397,6 +397,22 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
         throw new NotSupportedException (message, ex);
       }
     }
+    
+    public Expression VisitSqlBinaryOperator(SqlBinaryOperatorExpression expression)
+    {
+      try
+      {
+        return VisitChildrenWithGivenSemantics(expression, SqlExpressionContext.SingleValueRequired);
+      }
+      catch (NotSupportedException ex)
+      {
+        var message = string.Format(
+            "The SQL '{0}' operator requires a single value, so the following expression cannot "
+            + "be translated to SQL: '{1}'.",
+            expression.BinaryOperator, expression);
+        throw new NotSupportedException(message, ex);
+      }
+    }
 
     public Expression VisitAggregation (AggregationExpression expression)
     {
