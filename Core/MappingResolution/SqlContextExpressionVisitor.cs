@@ -57,18 +57,18 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
       return visitor.Visit (expression);
     }
 
-    private readonly SqlExpressionContext _currentContext;
-    private readonly IMappingResolutionStage _stage;
-    private readonly IMappingResolutionContext _context;
+    protected SqlExpressionContext CurrentContext { get; }
+    protected IMappingResolutionStage Stage { get; }
+    protected IMappingResolutionContext Context { get; }
 
     protected SqlContextExpressionVisitor (SqlExpressionContext currentContext, IMappingResolutionStage stage, IMappingResolutionContext context)
     {
       ArgumentUtility.CheckNotNull (nameof(stage), stage);
       ArgumentUtility.CheckNotNull (nameof(context), context);
 
-      _currentContext = currentContext;
-      _stage = stage;
-      _context = context;
+      CurrentContext = currentContext;
+      Stage = stage;
+      Context = context;
     }
 
     public override Expression Visit (Expression expression)
@@ -76,7 +76,7 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
       if (expression == null)
         return null;
 
-      var currentContext = _currentContext;
+      var currentContext = CurrentContext;
       switch (currentContext)
       {
         case SqlExpressionContext.SingleValueRequired:
@@ -123,7 +123,7 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
       return expression; // rely on Visit to apply correct semantics
     }
 
-    public Expression VisitSqlColumn (SqlColumnExpression expression)
+    public virtual Expression VisitSqlColumn (SqlColumnExpression expression)
     {
       // We always need to convert boolean columns to int columns because in the database, the column is represented as a bit (integer) value
       if (BooleanUtility.IsBooleanType (expression.Type))
@@ -138,7 +138,7 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
 
     public Expression VisitSqlEntity (SqlEntityExpression expression)
     {
-      if (_currentContext == SqlExpressionContext.SingleValueRequired)
+      if (CurrentContext == SqlExpressionContext.SingleValueRequired)
       {
         string message = string.Format (
             "Cannot use an entity expression ('{0}' of type '{1}') in a place where SQL requires a single value.",
@@ -164,7 +164,7 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
       {
         // In predicate context, we can ignore coalesces towards false, treat like a conversion to bool instead. (SQL treats NULL values in a falsey
         // way in predicate contexts.)
-        if (_currentContext == SqlExpressionContext.PredicateRequired
+        if (CurrentContext == SqlExpressionContext.PredicateRequired
             && expression.Right is ConstantExpression
             && Equals (((ConstantExpression) expression.Right).Value, false))
         {
@@ -217,7 +217,7 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
       return expression;
     }
 
-    public Expression VisitSqlIsNull (SqlIsNullExpression expression)
+    public virtual Expression VisitSqlIsNull (SqlIsNullExpression expression)
     {
       ArgumentUtility.CheckNotNull (nameof(expression), expression);
 
@@ -227,7 +227,7 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
       return expression;
     }
 
-    public Expression VisitSqlIsNotNull (SqlIsNotNullExpression expression)
+    public virtual Expression VisitSqlIsNotNull (SqlIsNotNullExpression expression)
     {
       ArgumentUtility.CheckNotNull (nameof(expression), expression);
 
@@ -241,7 +241,7 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
     {
       ArgumentUtility.CheckNotNull (nameof(expression), expression);
 
-      if (_currentContext == SqlExpressionContext.SingleValueRequired)
+      if (CurrentContext == SqlExpressionContext.SingleValueRequired)
       {
         string message = string.Format (
             "Cannot use an entity constant ('{0}' of type '{1}') in a place where SQL requires a single value.",
@@ -256,7 +256,7 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
     {
       ArgumentUtility.CheckNotNull (nameof(expression), expression);
 
-      var newSqlStatement = _stage.ApplySelectionContext (expression.SqlStatement, _currentContext, _context);
+      var newSqlStatement = Stage.ApplySelectionContext (expression.SqlStatement, CurrentContext, Context);
       if (!ReferenceEquals (expression.SqlStatement, newSqlStatement))
         return new SqlSubStatementExpression (newSqlStatement);
       return expression;
@@ -266,7 +266,7 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
     {
       ArgumentUtility.CheckNotNull (nameof(expression), expression);
 
-      if (_currentContext == SqlExpressionContext.SingleValueRequired)
+      if (CurrentContext == SqlExpressionContext.SingleValueRequired)
       {
         string message = string.Format ("Cannot use a complex expression ('{0}') in a place where SQL requires a single value.", expression);
         throw new NotSupportedException (message);
@@ -325,7 +325,7 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
       if (newKeyExpression != expression.KeyExpression
           || newElementExpression != expression.ElementExpression
           || !newAggregationExpressions.SequenceEqual (expression.AggregationExpressions))
-        return _context.UpdateGroupingSelectAndAddMapping (expression, newKeyExpression, newElementExpression, newAggregationExpressions);
+        return Context.UpdateGroupingSelectAndAddMapping (expression, newKeyExpression, newElementExpression, newAggregationExpressions);
 
       return expression;
     }
@@ -440,9 +440,9 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
       throw new NotSupportedException (message);
     }
 
-    private Expression VisitChildrenWithGivenSemantics (Expression expression, SqlExpressionContext childContext)
+    protected virtual Expression VisitChildrenWithGivenSemantics (Expression expression, SqlExpressionContext childContext)
     {
-      var visitor = new SqlContextExpressionVisitor (childContext, _stage, _context);
+      var visitor = new SqlContextExpressionVisitor (childContext, Stage, Context);
       return visitor.VisitExtension (expression);
     }
 
@@ -451,7 +451,7 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
       switch (expression.NodeType)
       {
         case ExpressionType.Convert:
-          return _currentContext;
+          return CurrentContext;
         case ExpressionType.Not:
           if (BooleanUtility.IsBooleanType (expression.Type))
             return SqlExpressionContext.PredicateRequired;
@@ -481,7 +481,7 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
       }
     }
 
-    private Expression HandleValueSemantics (Expression expression)
+    protected virtual Expression HandleValueSemantics (Expression expression)
     {
       var newExpression = base.Visit (expression);
       
@@ -514,8 +514,8 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
       var convertedBooleanExpression = newExpression as SqlConvertedBooleanExpression;
       if (convertedBooleanExpression != null)
       {
-        var isNullableExpression = convertedBooleanExpression.Expression.Type == typeof (int?);
-        return Expression.Equal (convertedBooleanExpression.Expression, new SqlLiteralExpression (1, isNullableExpression), isNullableExpression, null);
+        var isNullableExpression = convertedBooleanExpression.Expression.Type == typeof(int?);
+        return Expression.Equal(convertedBooleanExpression.Expression, GetTrueValue(convertedBooleanExpression, isNullableExpression), isNullableExpression, null);
       }
 
       if (!BooleanUtility.IsBooleanType (newExpression.Type))
@@ -529,6 +529,9 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
 
       return newExpression;
     }
+
+    protected virtual Expression GetTrueValue(SqlConvertedBooleanExpression expression, bool isNullable) 
+      => new SqlLiteralExpression(1, isNullable);
 
     private Expression ApplySingleValueContext (Expression expression)
     {
@@ -547,7 +550,7 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
 
     private Expression ApplySqlExpressionContext (Expression expression, SqlExpressionContext expressionContext)
     {
-      return ApplySqlExpressionContext (expression, expressionContext, _stage, _context);
+      return ApplySqlExpressionContext (expression, expressionContext, Stage, Context);
     }
 
     private Expression CreateValueExpressionForPredicate (Expression predicate)
