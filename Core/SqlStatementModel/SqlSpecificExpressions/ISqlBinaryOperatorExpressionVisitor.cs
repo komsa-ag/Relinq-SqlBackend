@@ -14,23 +14,17 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with re-linq; if not, see http://www.gnu.org/licenses.
 // 
-
 using System;
 using System.Linq.Expressions;
+using Remotion.Linq.Parsing;
 
 namespace Remotion.Linq.SqlBackend.SqlStatementModel.SqlSpecificExpressions
 {
   /// <summary>
-  /// This interface should be implemented by visitors that handle SQL-specific expressions.
+  /// Implemented by <see cref="ExpressionVisitor"/> subclasses handling <see cref="SqlBinaryOperatorExpression"/> instances.
   /// </summary>
-  public interface ISqlSpecificExpressionVisitor : ISqlNullCheckExpressionVisitor, ISqlInExpressionVisitor, ISqlExistsExpressionVisitor, ISqlBinaryOperatorExpressionVisitor
+  public interface ISqlBinaryOperatorExpressionVisitor
   {
-    Expression VisitSqlLiteral (SqlLiteralExpression expression);
-    Expression VisitSqlFunction (SqlFunctionExpression expression);
-    Expression VisitSqlConvert (SqlConvertExpression expression);
-    Expression VisitSqlRowNumber (SqlRowNumberExpression expression);
-    Expression VisitSqlLike (SqlLikeExpression expression);
-    Expression VisitSqlLength (SqlLengthExpression expression);
-    Expression VisitSqlCase (SqlCaseExpression expression);
+    Expression VisitSqlBinaryOperator (SqlBinaryOperatorExpression expression);
   }
 }

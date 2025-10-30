@@ -28,6 +28,7 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
   {
     BinaryExpression ResolvePotentialEntityComparison (BinaryExpression binaryExpression);
     SqlInExpression ResolvePotentialEntityComparison (SqlInExpression inExpression);
+    SqlBinaryOperatorExpression ResolvePotentialEntityComparison(SqlBinaryOperatorExpression inExpression);
     SqlIsNullExpression ResolvePotentialEntityComparison (SqlIsNullExpression isNullExpression);
     SqlIsNotNullExpression ResolvePotentialEntityComparison (SqlIsNotNullExpression isNotNullExpression);
     Expression ResolvePotentialEntity (Expression expression);

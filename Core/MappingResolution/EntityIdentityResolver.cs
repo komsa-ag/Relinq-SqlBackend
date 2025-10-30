@@ -126,6 +126,19 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
       return inExpression;
     }
 
+    public SqlBinaryOperatorExpression ResolvePotentialEntityComparison(SqlBinaryOperatorExpression binaryExpression)
+    {
+      ArgumentUtility.CheckNotNull(nameof(binaryExpression), binaryExpression);
+
+      var newLeft = ResolvePotentialEntity(binaryExpression.LeftExpression);
+      var newRight = ResolvePotentialEntity(binaryExpression.RightExpression);
+
+      if (newLeft != binaryExpression.LeftExpression || newRight != binaryExpression.RightExpression)
+        return new SqlBinaryOperatorExpression(binaryExpression.Type, binaryExpression.BinaryOperator, newLeft, newRight);
+
+      return binaryExpression;
+    }
+
     public SqlIsNullExpression ResolvePotentialEntityComparison (SqlIsNullExpression isNullExpression)
     {
       var newExpression = ResolvePotentialEntity (isNullExpression.Expression);

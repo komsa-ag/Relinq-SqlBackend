@@ -36,6 +36,7 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
       INamedExpressionVisitor,
       ISqlNullCheckExpressionVisitor,
       ISqlInExpressionVisitor,
+      ISqlBinaryOperatorExpressionVisitor,
       ISqlExistsExpressionVisitor
   {
     public static Expression ResolveExpression (
@@ -272,6 +273,20 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
 
       if (expressionWithSimplifiedEntities != baseVisitedExpression)
         return Visit (expressionWithSimplifiedEntities);
+
+      return baseVisitedExpression;
+    }
+
+    public Expression VisitSqlBinaryOperator(SqlBinaryOperatorExpression expression)
+    {
+      ArgumentUtility.CheckNotNull(nameof(expression), expression);
+
+      var baseVisitedExpression = (SqlBinaryOperatorExpression)VisitExtension(expression);
+
+      var expressionWithSimplifiedEntities = _entityIdentityResolver.ResolvePotentialEntityComparison(baseVisitedExpression);
+
+      if (expressionWithSimplifiedEntities != baseVisitedExpression)
+        return Visit(expressionWithSimplifiedEntities);
 
       return baseVisitedExpression;
     }
