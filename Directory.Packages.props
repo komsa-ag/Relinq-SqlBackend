@@ -14,7 +14,7 @@
     <PackageVersion Include="NUnit" Version="4.2.2" />
     <PackageVersion Include="NUnit3TestAdapter" Version="4.6.0" />
     <PackageVersion Include="NUnitTestAdapter" Version="2.3.0" />
-    <PackageVersion Include="Remotion.Linq" Version="2.2.0" />
+    <PackageVersion Include="Komsa.Remotion.Linq" Version="2.2.1-Preview2" />
     <PackageVersion Include="Remotion.Linq.Development" Version="2.2.0" />
   </ItemGroup>
 

@@ -59,9 +59,9 @@
   <PropertyGroup>
     <_version>$(Version.Split('-')[0])</_version>
     <AssemblyVersion>$(_version).0</AssemblyVersion>
-    <FileVersion>$(_version).24009</FileVersion>
-    <InformationalVersion>$(_version).9+$(Configuration)</InformationalVersion>
-    <PackageVersion>$(_version).9</PackageVersion>
+    <FileVersion>$(_version).24011</FileVersion>
+    <InformationalVersion>$(_version).11+$(Configuration)</InformationalVersion>
+    <PackageVersion>$(_version).11-Preview2</PackageVersion>
   </PropertyGroup>
 
   <Target Name="CopyTestHostAppConfigs"

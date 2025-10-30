@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Remotion.Linq" />
+    <PackageReference Include="Komsa.Remotion.Linq" />
   </ItemGroup>
 
 </Project>
