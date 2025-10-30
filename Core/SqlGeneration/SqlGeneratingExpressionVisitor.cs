@@ -57,13 +57,21 @@ namespace Remotion.Linq.SqlBackend.SqlGeneration
 
     protected SqlGeneratingExpressionVisitor (ISqlCommandBuilder commandBuilder, ISqlGenerationStage stage)
     {
-      ArgumentUtility.CheckNotNull (nameof(commandBuilder), commandBuilder);
-      ArgumentUtility.CheckNotNull (nameof(stage), stage);
+      ArgumentUtility.CheckNotNull(nameof(commandBuilder), commandBuilder);
+      ArgumentUtility.CheckNotNull(nameof(stage), stage);
 
       _commandBuilder = commandBuilder;
-      _binaryExpressionTextGenerator = new BinaryExpressionTextGenerator (commandBuilder, this);
+      _binaryExpressionTextGenerator = CreateBinaryExpressionTextGenerator(commandBuilder);
       _stage = stage;
     }
+
+    /// <summary>
+    /// erstellt den BinaryExpressionTextGenerator
+    /// </summary>
+    /// <remarks>@@JFri - ergänzt</remarks>
+    /// <returns>BinaryExpressionTextGenerator</returns>
+    protected virtual BinaryExpressionTextGenerator CreateBinaryExpressionTextGenerator(ISqlCommandBuilder commandBuilder) 
+      => new(commandBuilder, this);
 
     protected ISqlCommandBuilder CommandBuilder
     {
