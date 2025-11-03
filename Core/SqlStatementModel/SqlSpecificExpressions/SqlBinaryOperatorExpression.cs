@@ -73,7 +73,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.SqlSpecificExpressions
       var newRightExpression = visitor.Visit(_rightExpression);
 
       if (newLeftExpression != _leftExpression || newRightExpression != _rightExpression)
-        return new SqlBinaryOperatorExpression(typeof(bool), _binaryOperator, newLeftExpression, newRightExpression);
+        return new SqlBinaryOperatorExpression(_type, _binaryOperator, newLeftExpression, newRightExpression);
       else
         return this;
     }

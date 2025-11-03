@@ -61,7 +61,7 @@
     <AssemblyVersion>$(_version).0</AssemblyVersion>
     <FileVersion>$(_version).24011</FileVersion>
     <InformationalVersion>$(_version).11+$(Configuration)</InformationalVersion>
-    <PackageVersion>$(_version).11-Preview2</PackageVersion>
+    <PackageVersion>$(_version).11-Preview3</PackageVersion>
   </PropertyGroup>
 
   <Target Name="CopyTestHostAppConfigs"
