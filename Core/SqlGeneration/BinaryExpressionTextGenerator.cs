@@ -41,25 +41,25 @@ namespace Remotion.Linq.SqlBackend.SqlGeneration
 
       _simpleOperatorRegistry = new Dictionary<ExpressionType, string>
                                 {
-                                    { ExpressionType.Add, "+" },           
-                                    { ExpressionType.AddChecked, "+" },    
-                                    { ExpressionType.And, "&" },           
-                                    { ExpressionType.AndAlso, "AND" },     
-                                    { ExpressionType.Divide, "/" },        
-                                    { ExpressionType.ExclusiveOr, "^" },   
-                                    { ExpressionType.GreaterThan, ">" },   
-                                    { ExpressionType.GreaterThanOrEqual, ">=" }, 
-                                    { ExpressionType.LessThan, "<" },            
-                                    { ExpressionType.LessThanOrEqual, "<=" },    
-                                    { ExpressionType.Modulo, "%" },              
-                                    { ExpressionType.Multiply, "*" },            
-                                    { ExpressionType.MultiplyChecked, "*" },     
-                                    { ExpressionType.Or, "|" },                  
-                                    { ExpressionType.OrElse, "OR" },             
-                                    { ExpressionType.Subtract, "-" },            
-                                    { ExpressionType.SubtractChecked, "-" },     
+                                    { ExpressionType.Add, "+" },
+                                    { ExpressionType.AddChecked, "+" },
+                                    { ExpressionType.And, "&" },
+                                    { ExpressionType.AndAlso, "AND" },
+                                    { ExpressionType.Divide, "/" },
+                                    { ExpressionType.ExclusiveOr, "^" },
+                                    { ExpressionType.GreaterThan, ">" },
+                                    { ExpressionType.GreaterThanOrEqual, ">=" },
+                                    { ExpressionType.LessThan, "<" },
+                                    { ExpressionType.LessThanOrEqual, "<=" },
+                                    { ExpressionType.Modulo, "%" },
+                                    { ExpressionType.Multiply, "*" },
+                                    { ExpressionType.MultiplyChecked, "*" },
+                                    { ExpressionType.Or, "|" },
+                                    { ExpressionType.OrElse, "OR" },
+                                    { ExpressionType.Subtract, "-" },
+                                    { ExpressionType.SubtractChecked, "-" },
                                     { ExpressionType.Equal, "=" },
-                                    { ExpressionType.NotEqual, "<>" }            
+                                    { ExpressionType.NotEqual, "<>" }
                                 };
     }
 
@@ -78,7 +78,7 @@ namespace Remotion.Linq.SqlBackend.SqlGeneration
           break;
       }
     }
-
+     
     private void GenerateSqlForPrefixOperator (string sqlOperatorString, Expression left, Expression right)
     {
       _commandBuilder.Append (sqlOperatorString);
@@ -99,29 +99,35 @@ namespace Remotion.Linq.SqlBackend.SqlGeneration
       {
         // SQL has no logical XOR operator, so we simulate: a XOR b <=> (a AND NOT b) OR (NOT a AND b)
         var exclusiveOrSimulationExpression = Expression.OrElse (
-            Expression.AndAlso (left, Expression.Not (right)), 
+            Expression.AndAlso (left, Expression.Not (right)),
             Expression.AndAlso (Expression.Not (left), right));
         _expressionVisitor.Visit (exclusiveOrSimulationExpression);
       }
       else
       {
-        string operatorString = GetRegisteredOperatorString (nodeType);
-
-        _expressionVisitor.Visit (left);
-        _commandBuilder.Append (" ");
-        _commandBuilder.Append (operatorString);
-        _commandBuilder.Append (" ");
-        _expressionVisitor.Visit (right);
+        GenerateSqlForInfixOperatorCore(left, right, nodeType);
       }
+    }
+
+    // @@JFri extrahiert
+    protected virtual void GenerateSqlForInfixOperatorCore(Expression left, Expression right, ExpressionType nodeType)
+    {
+      string operatorString = GetRegisteredOperatorString(nodeType);
+
+      _expressionVisitor.Visit(left);
+      _commandBuilder.Append(" ");
+      _commandBuilder.Append(operatorString);
+      _commandBuilder.Append(" ");
+      _expressionVisitor.Visit(right);
     }
 
     private string GetRegisteredOperatorString (ExpressionType nodeType)
     {
-        string operatorString;
-        if (!_simpleOperatorRegistry.TryGetValue (nodeType, out operatorString))
-          throw new NotSupportedException ("The binary operator '" + nodeType + "' is not supported.");
-        return operatorString;
+      string operatorString;
+      if (!_simpleOperatorRegistry.TryGetValue (nodeType, out operatorString))
+        throw new NotSupportedException ("The binary operator '" + nodeType + "' is not supported.");
+      return operatorString;
     }
-   
+
   }
 }
