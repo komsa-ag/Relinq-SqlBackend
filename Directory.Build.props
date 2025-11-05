@@ -1,0 +1,9 @@
+<Project>
+
+  <PropertyGroup>
+    <!-- Own packages -->
+    <RelinqPackageVersion>2.1.0.11</RelinqPackageVersion>
+
+  </PropertyGroup>
+
+</Project>
