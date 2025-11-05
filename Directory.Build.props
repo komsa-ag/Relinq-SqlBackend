@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <!-- Own packages -->
-    <RelinqPackageVersion>2.1.0.14</RelinqPackageVersion>
+    <RelinqPackageVersion>2.1.0.15</RelinqPackageVersion>
     <!-- MS packages -->
     <MicrosoftSourceLinkGitHubPackageVersion>8.0.0</MicrosoftSourceLinkGitHubPackageVersion>
   </PropertyGroup>

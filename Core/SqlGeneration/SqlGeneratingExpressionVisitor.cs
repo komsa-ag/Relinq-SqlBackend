@@ -242,7 +242,7 @@ namespace Remotion.Linq.SqlBackend.SqlGeneration
       return expression;
     }
 
-    public Expression VisitSqlLike (SqlLikeExpression expression)
+    public virtual Expression VisitSqlLike (SqlLikeExpression expression)
     {
       ArgumentUtility.CheckNotNull ("expression", expression);
 
