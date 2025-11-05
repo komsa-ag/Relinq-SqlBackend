@@ -117,8 +117,8 @@ namespace Remotion.Linq.SqlBackend.SqlGeneration
     protected override Expression VisitConstant (ConstantExpression expression)
     {
       Assertion.DebugAssert (expression.Type != typeof (bool), "Boolean constants should have been removed by SqlContextExpressionVisitor.");
-      Assertion.DebugAssert (
-          !typeof (ICollection).IsAssignableFrom (expression.Type),
+      Assertion.DebugAssert (                                      // @@jfri: Hack für like auf Blob-Felder
+          !typeof (ICollection).IsAssignableFrom (expression.Type) || (expression.Type == typeof(byte[])),
           "Collections should have been replaced with SqlCollectionExpressions by SqlPreparationExpressionVisitor.");
 
       if (expression.Value == null)

@@ -267,7 +267,7 @@ namespace Remotion.Linq.SqlBackend.SqlPreparation
       ArgumentUtility.CheckNotNull ("expression", expression);
 
       var collection = expression.Value as ICollection;
-      if (collection != null)
+      if (collection != null && !(collection is byte[])) // @@jfri: Hack für like auf Blob-Felder
         return new SqlCollectionExpression (expression.Type, collection.Cast<object>().Select (Expression.Constant).Cast<Expression>());
 
       return base.VisitConstant (expression);
