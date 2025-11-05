@@ -2,8 +2,23 @@
 
   <PropertyGroup>
     <!-- Own packages -->
-    <RelinqPackageVersion>2.1.0.11</RelinqPackageVersion>
-
+    <RelinqPackageVersion>2.1.0.14</RelinqPackageVersion>
+    <!-- MS packages -->
+    <MicrosoftSourceLinkGitHubPackageVersion>8.0.0</MicrosoftSourceLinkGitHubPackageVersion>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <SourceLinkCreate>true</SourceLinkCreate>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Label="AssemblyInfo">
+    <Company>rubicon IT GmbH; KOMSA AG</Company>
+    <Product>re-motion Framework: re-linq (www.re-motion.org)</Product>
+    <Copyright>Copyright (c) rubicon IT GmbH, www.rubicon.eu - Licensed under Apache License, Version 2.0</Copyright>
+    <Version>2.1.0.0</Version>
+    <PackageVersion>$(RelinqPackageVersion)</PackageVersion>
+    <FileVersion>$(RelinqPackageVersion)</FileVersion>
+  </PropertyGroup>
 </Project>

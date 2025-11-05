@@ -1,17 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{EBA04D26-8D5B-4EF5-9898-C2D90373149C}</ProjectGuid>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <DefineConstants>NET_4_0</DefineConstants>
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <OutputPath>..\..\Binaries\$(Configuration)\</OutputPath>
-    <DocumentationFile>..\..\Binaries\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    <OutputPath>..\..\Relinq\Binaries\$(Configuration)\</OutputPath>
     <Deterministic>true</Deterministic>
     <NoWarn>1591;419</NoWarn>
   </PropertyGroup>
 
+  <PropertyGroup Label="AssemblyInfo">
+    <Title>re-linq SQL Backend</Title>
+    <Description>re-linq SQL Backend: A framework for generating SQL based on the re-linq Frontend.</Description>
+    <PackageProjectUrl>https://github.com/komsa-ag/Relinq-SqlBackend</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/komsa-ag/Relinq-SqlBackend</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+  
   <PropertyGroup>
     <!-- Erzeugt ein entsprechendes *.nupkg im Ausgabe-Verzeichnis -->
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -26,20 +32,12 @@
     <!-- Damit das Package eine "Run/Output-Dependency" des Projektes wird, indem es installiert wird -->
     <DevelopmentDependency>false</DevelopmentDependency>
   </PropertyGroup>
+  
   <ItemGroup>
-    <!-- Dateien, die ins Package kommen. Hier speziell das Assembly und die (Un)Install-Scripte -->
-    <None Update="tools\*.ps1" CopyToOutputDirectory="Always" Pack="true" PackagePath="" />
-    <None Include="$(OutputPath)\**\$(AssemblyName).dll" Pack="true" PackagePath="" Visible="false" />
+    <Compile Include="..\..\Relinq\AssemblyInfoShared.cs" Link="AssemblyInfoShared.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="*.vspscc" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="..\..\Relinq\AssemblyInfoShared.cs">
-      <Link>Properties\AssemblyInfoShared.cs</Link>
-    </Compile>
     <None Include="..\Build\NuSpec\TemplateShared.nuspec">
       <Link>TemplateShared.nuspec</Link>
     </None>
@@ -51,4 +49,17 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Relinq\Core.Net_4_5\Remotion.Linq.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="$(MicrosoftSourceLinkGitHubPackageVersion)" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Target Name="IncludePdbInPackage" AfterTargets="Build">
+    <ItemGroup>
+      <None Include="$(OutputPath)\$(AssemblyName).pdb" Pack="true" PackagePath="lib\$(TargetFramework)" />
+    </ItemGroup>
+  </Target>
 </Project>
