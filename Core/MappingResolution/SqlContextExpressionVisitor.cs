@@ -397,6 +397,12 @@ namespace Remotion.Linq.SqlBackend.MappingResolution
       }
     }
 
+    // @@jfri ergänzt
+    public Expression VisitSqlBinaryOperator(SqlBinaryOperatorExpression expression)
+    {
+      return VisitChildrenWithGivenSemantics(expression, SqlExpressionContext.SingleValueRequired);
+    }
+    
     public Expression VisitAggregation (AggregationExpression expression)
     {
       Expression newInnerExpression;

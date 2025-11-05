@@ -32,5 +32,7 @@ namespace Remotion.Linq.SqlBackend.SqlStatementModel.SqlSpecificExpressions
     Expression VisitSqlLike (SqlLikeExpression expression);
     Expression VisitSqlLength (SqlLengthExpression expression);
     Expression VisitSqlCase (SqlCaseExpression expression);
+    // @@jfri ergänzt
+    Expression VisitSqlBinaryOperator(SqlBinaryOperatorExpression expression);
   }
 }

@@ -148,6 +148,20 @@ namespace Remotion.Linq.SqlBackend.SqlGeneration
       return expression;
     }
 
+    // @@jfri - ergänzt
+    public virtual Expression VisitSqlBinaryOperator(SqlBinaryOperatorExpression expression)
+    {
+      ArgumentUtility.CheckNotNull("expression", expression);
+
+      Visit(expression.LeftExpression);
+      _commandBuilder.Append(" ");
+      _commandBuilder.Append(expression.BinaryOperator);
+      _commandBuilder.Append(" ");
+      Visit(expression.RightExpression);
+
+      return expression;
+    }
+    
     public virtual Expression VisitSqlIsNull (SqlIsNullExpression expression)
     {
       ArgumentUtility.CheckNotNull ("expression", expression);
