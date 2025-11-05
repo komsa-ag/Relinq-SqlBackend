@@ -247,14 +247,37 @@ namespace Remotion.Linq.SqlBackend.SqlPreparation
       var fromExpressionAsConstant = (queryModel.MainFromClause.FromExpression) as ConstantExpression;
       if (queryModel.IsIdentityQuery () && fromExpressionAsConstant != null)
       {
-        if (fromExpressionAsConstant.Value is ICollection)
-          return (ICollection) fromExpressionAsConstant.Value;
-        
+        // @@jfri - geändert
+        if (TryGetConstantCollection(fromExpressionAsConstant, out ICollection result))
+          return result;
+
+        //if (fromExpressionAsConstant.Value is ICollection)
+        //  return (ICollection) fromExpressionAsConstant.Value;
+
         if (fromExpressionAsConstant.Value == null)
           throw new NotSupportedException ("Data sources cannot be null.");
       }
 
       return null;
+    }
+
+    // @@jfri - ergänzt / extrahiert
+
+    /// <summary>
+    /// tries to convert the value of the expression into a collection
+    /// </summary>
+    /// <param name="expression">expression</param>
+    /// <param name="collection">collection</param>
+    /// <returns>whether the conversion succeeded</returns>
+    protected virtual bool TryGetConstantCollection(ConstantExpression expression, out ICollection collection)
+    {
+      if (expression.Value is ICollection result)
+      {
+        collection = result;
+        return true;
+      }
+      collection = null;
+      return false;
     }
   }
 }
