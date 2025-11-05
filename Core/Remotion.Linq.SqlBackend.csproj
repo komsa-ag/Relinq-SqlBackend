@@ -7,14 +7,13 @@
   </PropertyGroup>
   <PropertyGroup>
     <ProjectGuid>{EBA04D26-8D5B-4EF5-9898-C2D90373149C}</ProjectGuid>
-    <TargetFramework>net471</TargetFramework>
+    <TargetFrameworks>net471;netstandard2.0</TargetFrameworks>
     <DefineConstants>NET_4_0</DefineConstants>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <OutputPath>..\..\Binaries\$(Configuration)\</OutputPath>
-    <DocumentationFile>..\..\Binaries\$(Configuration)\Remotion.Linq.SqlBackend.xml</DocumentationFile>
+    <DocumentationFile>..\..\Binaries\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <Deterministic>true</Deterministic>
     <NoWarn>1591;419</NoWarn>
   </PropertyGroup>
@@ -36,14 +35,14 @@
   <ItemGroup>
     <!-- Dateien, die ins Package kommen. Hier speziell das Assembly und die (Un)Install-Scripte -->
     <None Update="tools\*.ps1" CopyToOutputDirectory="Always" Pack="true" PackagePath="" />
-    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="" Visible="false" />
+    <None Include="$(OutputPath)\**\$(AssemblyName).dll" Pack="true" PackagePath="" Visible="false" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="*.vspscc" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net471' ">
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
