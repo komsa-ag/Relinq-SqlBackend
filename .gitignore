@@ -195,3 +195,5 @@ remotion.snk
 
 # Named
 GitExtensions.settings.backup
+
+/.claude/settings.local.json
